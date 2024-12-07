@@ -426,9 +426,12 @@ function initializeConfetti() {
 function rollDice() {
     if (isRolling) return; // Stop if already rolling
 
+    // Check if there are no players and guest mode is not active
     if (players.length === 0 && !guestMode) {
-        alert("Please add at least one player to start the game!");
-        return;
+        // Automatically add a guest player
+        players.push('Guest');
+        guestMode = true;
+        updatePlayersDisplay();
     }
 
     isRolling = true;
