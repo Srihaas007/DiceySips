@@ -426,7 +426,7 @@ function initializeConfetti() {
 function rollDice() {
     if (isRolling) return; // Stop if already rolling
 
-    if(players.length === 0 && !guestMode){
+    if (players.length === 0 && !guestMode) {
         alert("Please add at least one player to start the game!");
         return;
     }
@@ -438,43 +438,42 @@ function rollDice() {
     jokerCard.classList.remove('active');
     overlay.classList.remove('active');
 
-    // 🕒 Get Rotation Duration from User or Default to 3 Seconds 🕒
+    // Get rotation duration from user or default to 3 seconds
     let rotationDuration = parseFloat(rotationTimeInput.value);
-    if (isNaN(rotationDuration) || rotationDuration < 1) rotationDuration = 3; // Minimum 1 second
+    if (isNaN(rotationDuration) || rotationDuration < 1) rotationDuration = 3;
 
-    // 🔄 Update Transition Duration Based on User Input 🔄
+    // Update transition duration based on user input
     dice1.style.transition = `transform ${rotationDuration}s cubic-bezier(0.25, 1, 0.5, 1)`;
     dice2.style.transition = `transform ${rotationDuration}s cubic-bezier(0.25, 1, 0.5, 1)`;
 
-    // 🎲 Roll Two Dice 🎲
+    // Roll two dice
     const rolledNumber1 = getRandomInt(1, 6);
     const rolledNumber2 = getRandomInt(1, 6);
 
-    // 🔄 Calculate Random Rotations for Dice1 🔄
-    const randomXRotations1 = getRandomInt(3, 6); // Full rotations on X-axis
-    const randomYRotations1 = getRandomInt(3, 6); // Full rotations on Y-axis
+    // Calculate random rotations for dice1
+    const randomXRotations1 = getRandomInt(3, 6);
+    const randomYRotations1 = getRandomInt(3, 6);
 
-    // 📐 Total Degrees to Rotate for Dice1 📐
+    // Total degrees to rotate for dice1
     const totalX1 = (randomXRotations1 * 360) + getFaceRotation(rolledNumber1).x;
     const totalY1 = (randomYRotations1 * 360) + getFaceRotation(rolledNumber1).y;
 
-    // 🎯 Apply Rotation for Dice1 🎯
+    // Apply rotation for dice1
     dice1.style.transform = `rotateX(${totalX1}deg) rotateY(${totalY1}deg)`;
 
-    // 🔄 Calculate Random Rotations for Dice2 🔄
-    const randomXRotations2 = getRandomInt(3, 6); // Full rotations on X-axis
-    const randomYRotations2 = getRandomInt(3, 6); // Full rotations on Y-axis
+    // Calculate random rotations for dice2
+    const randomXRotations2 = getRandomInt(3, 6);
+    const randomYRotations2 = getRandomInt(3, 6);
 
-    // 📐 Total Degrees to Rotate for Dice2 📐
+    // Total degrees to rotate for dice2
     const totalX2 = (randomXRotations2 * 360) + getFaceRotation(rolledNumber2).x;
     const totalY2 = (randomYRotations2 * 360) + getFaceRotation(rolledNumber2).y;
 
-    // 🎯 Apply Rotation for Dice2 🎯
+    // Apply rotation for dice2
     dice2.style.transform = `rotateX(${totalX2}deg) rotateY(${totalY2}deg)`;
 
-    // ⏳ After Animation Ends, Handle the Outcome ⏳
+    // After animation ends, handle the outcome
     setTimeout(() => {
-        // Show the rolled numbers on the dice
         showDiceNumber(dice1, rolledNumber1);
         showDiceNumber(dice2, rolledNumber2);
 
@@ -487,20 +486,17 @@ function rollDice() {
 
         if (action) {
             if (comboKey === '6-5' || `${rolledNumber2}-${rolledNumber1}` === '6-5') {
-                // Trigger Joker Card for the special chill combo
                 triggerJokerAction(action);
             } else {
                 triggerFunAction(action);
-                // Celebrate with confetti for other combos
                 launchConfetti();
             }
         }
 
-        // Move to next player's turn
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         highlightCurrentPlayer();
 
-    }, rotationDuration * 1000); // Match the timeout with the rotation duration
+    }, rotationDuration * 1000);
 }
 
 // Function to show the rolled number on the dice
@@ -581,3 +577,29 @@ function highlightCurrentPlayer() {
         currentPlayerDiv.classList.add('current-player');
     }
 }
+
+// Add event listener for the "Add Players" button
+addPlayersButton.addEventListener('click', () => {
+    // Show the add players modal
+    addPlayersModal.classList.add('active');
+    overlay.classList.add('active');
+});
+
+// Add event listener for the "Add Player" button inside the modal
+addPlayerButton.addEventListener('click', () => {
+    const playerName = playerNameInput.value.trim();
+    if (playerName) {
+        players.push(playerName);
+        updatePlayersDisplay();
+        playerNameInput.value = ''; // Clear the input field
+    }
+});
+
+// Add event listener for the "Close" button in the modal
+closeModal.addEventListener('click', () => {
+    addPlayersModal.classList.remove('active');
+    overlay.classList.remove('active');
+});
+
+// Ensure the roll button is enabled and has an event listener
+rollButton.addEventListener('click', rollDice);
