@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Dice Game</title>
+    <title>Tipsy Dice</title>
     <!-- Link to External CSS -->
     <link rel="stylesheet" href="dice.css">
     <!-- Link to Font Awesome for Icons -->
@@ -32,23 +32,77 @@
             <!-- First Dice -->
             <div id="dice1" class="dice">
                 <!-- Dice Faces -->
-                <div class="face front"><div class="dot"></div></div>
-                <div class="face back"><div class="dot"></div></div>
-                <div class="face right"><div class="dot"></div></div>
-                <div class="face left"><div class="dot"></div></div>
-                <div class="face top"><div class="dot"></div></div>
-                <div class="face bottom"><div class="dot"></div></div>
+                <div class="face front">
+                    <div class="dot"></div>
+                </div>
+                <div class="face back">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="face right">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="face left">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="face top">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="face bottom">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
             </div>
 
             <!-- Second Dice -->
             <div id="dice2" class="dice">
                 <!-- Dice Faces -->
-                <div class="face front"><div class="dot"></div></div>
-                <div class="face back"><div class="dot"></div></div>
-                <div class="face right"><div class="dot"></div></div>
-                <div class="face left"><div class="dot"></div></div>
-                <div class="face top"><div class="dot"></div></div>
-                <div class="face bottom"><div class="dot"></div></div>
+                <div class="face front">
+                    <div class="dot"></div>
+                </div>
+                <div class="face back">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="face right">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="face left">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="face top">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="face bottom">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
             </div>
         </div>
 
@@ -123,12 +177,6 @@
                 <button id="startGameButton" class="start-game-button" disabled>Start Game</button>
             </div>
         </div>
-
-        <!-- Sound Effects -->
-        <audio id="rollSound" src="https://www.myinstants.com/media/sounds/dice-roll-sound-effect.mp3" preload="auto"></audio>
-        <audio id="successSound" src="https://www.myinstants.com/media/sounds/success-sound-effect.mp3" preload="auto"></audio>
-        <audio id="errorSound" src="https://www.myinstants.com/media/sounds/error-sound-effect.mp3" preload="auto"></audio>
-        <audio id="jokerSound" src="https://www.myinstants.com/media/sounds/joker-sound-effect.mp3" preload="auto"></audio>
 
         <!-- Confetti Canvas -->
         <canvas id="confettiCanvas"></canvas>

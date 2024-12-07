@@ -174,6 +174,7 @@ body.dark-mode .dice-container {
     cursor: pointer;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     border-radius: 20px; /* More rounded */
+    background-color: #ffffff;
 }
 
 .dice:hover {
@@ -368,7 +369,7 @@ body.dark-mode .message {
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 2s; /* Increased transition time for smoother spin */
+    transition: transform 0.6s;
 }
 
 .action-card .card-front,
@@ -461,7 +462,7 @@ body.dark-mode .close-button:hover {
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 2s; /* Increased transition time for smoother spin */
+    transition: transform 0.6s;
 }
 
 .joker-card .card-front,
@@ -478,28 +479,33 @@ body.dark-mode .close-button:hover {
 }
 
 .joker-card .card-front {
-    background: #ffffff;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: #ff4081;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: bold;
+    position: relative;
 }
 
-body.dark-mode .joker-card .card-front {
-    background: #333333;
+.joker-card .card-front::before {
+    content: '🃏';
+    font-size: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.2;
 }
 
 .joker-card .card-back {
-    background: #ffffff;
-    transform: rotateY(180deg);
+    background: #ff4081;
+    color: #ffffff;
+    font-size: 24px;
     padding: 30px;
     text-align: center;
-}
-
-body.dark-mode .joker-card .card-back {
-    background: #444444;
-    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .joker-card.flip .card-inner {
@@ -981,4 +987,19 @@ body.dark-mode .players-display .player-name:hover {
         font-size: 14px;
         padding: 6px 12px;
     }
+}
+
+/* Ensure modals and cards are hidden by default */
+.modal, .action-card, .joker-card {
+    display: none; /* Hidden by default */
+}
+
+/* Show modals and cards when they have an 'active' class */
+.modal.active, .action-card.active, .joker-card.active {
+    display: block;
+}
+
+/* Overlay should be visible when a modal is active */
+.overlay.active {
+    display: block;
 }

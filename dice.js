@@ -3,10 +3,6 @@ const dice1 = document.getElementById('dice1');
 const dice2 = document.getElementById('dice2');
 const rollButton = document.getElementById('rollButton');
 const message = document.getElementById('message');
-const rollSound = document.getElementById('rollSound');
-const successSound = document.getElementById('successSound');
-const errorSound = document.getElementById('errorSound');
-const jokerSound = document.getElementById('jokerSound');
 const rotationTimeInput = document.getElementById('rotationTime');
 const actionCard = document.getElementById('actionCard');
 const cardInner = actionCard.querySelector('.card-inner');
@@ -20,9 +16,8 @@ const darkModeModal = document.getElementById('darkModeModal');
 const closeDarkModeModal = document.getElementById('closeDarkModeModal');
 const confirmDarkMode = document.getElementById('confirmDarkMode');
 const cancelDarkMode = document.getElementById('cancelDarkMode');
-const overlay = document.getElementById('overlay');
 const darkModeButton = document.getElementById('darkModeButton');
-const addPlayersButton = document.getElementById('addPlayersButton'); // New Add Players Button
+const addPlayersButton = document.getElementById('addPlayersButton'); // Add Players Button
 const body = document.body;
 const confettiCanvas = document.getElementById('confettiCanvas');
 
@@ -45,34 +40,6 @@ const playersList = document.getElementById('playersList');
 const startGameButton = document.getElementById('startGameButton');
 const clearPlayersButton = document.getElementById('clearPlayersButton');
 const playersDisplay = document.getElementById('playersDisplay');
-
-/* ===========================
-   Sound Management
-   =========================== */
-
-// Play sound when rolling dice
-function playRollSound() {
-    rollSound.currentTime = 0;
-    rollSound.play();
-}
-
-// Play success sound
-function playSuccessSound() {
-    successSound.currentTime = 0;
-    successSound.play();
-}
-
-// Play error sound
-function playErrorSound() {
-    errorSound.currentTime = 0;
-    errorSound.play();
-}
-
-// Play joker sound
-function playJokerSound() {
-    jokerSound.currentTime = 0;
-    jokerSound.play();
-}
 
 /* ===========================
    Cookie Management Functions
@@ -116,7 +83,6 @@ window.onload = function() {
         if(players.length > 10){
             players = players.slice(0,10); // Limit to 10 players
             setCookie('players', JSON.stringify(players), 7);
-            playErrorSound();
             alert('Maximum of 10 players allowed. Extra players have been removed.');
         }
         players.forEach(player => addPlayerToList(player));
@@ -142,43 +108,39 @@ window.onload = function() {
 
 // Open Add Players Modal
 function openAddPlayersModal() {
-    addPlayersModal.style.display = 'block';
-    overlay.style.display = 'block';
-    addPlayersModal.classList.add('animate__fadeInDown');
+    addPlayersModal.classList.add('active');
+    overlay.classList.add('active');
 }
 
 // Close Add Players Modal
 function closeAddPlayersModalFunc() {
-    addPlayersModal.style.display = 'none';
-    overlay.style.display = 'none';
-    addPlayersModal.classList.remove('animate__fadeInDown');
+    addPlayersModal.classList.remove('active');
+    overlay.classList.remove('active');
 }
 
 // Open Dark Mode Warning Modal
 function openDarkModeModal() {
-    darkModeModal.style.display = 'block';
-    overlay.style.display = 'block';
-    darkModeModal.classList.add('animate__fadeInDown');
+    darkModeModal.classList.add('active');
+    overlay.classList.add('active');
 }
 
 // Close Dark Mode Warning Modal
 function closeDarkModeModalFunc() {
-    darkModeModal.style.display = 'none';
-    overlay.style.display = 'none';
-    darkModeModal.classList.remove('animate__fadeInDown');
+    darkModeModal.classList.remove('active');
+    overlay.classList.remove('active');
 }
 
 // Close Action Card Modal
 function closeFunCard() {
-    actionCard.style.display = 'none';
-    overlay.style.display = 'none';
+    actionCard.classList.remove('active');
+    overlay.classList.remove('active');
     cardInner.classList.remove('flip');
 }
 
 // Close Joker Card Modal
 function closeJokerCardModal() {
-    jokerCard.style.display = 'none';
-    overlay.style.display = 'none';
+    jokerCard.classList.remove('active');
+    overlay.classList.remove('active');
     jokerCardInner.classList.remove('flip');
 }
 
@@ -191,7 +153,6 @@ addPlayerButton.addEventListener('click', () => {
     const playerName = playerNameInput.value.trim();
     if(playerName && !players.includes(playerName)) {
         if(players.length >=10){
-            playErrorSound();
             alert('Maximum of 10 players reached!');
             return;
         }
@@ -202,12 +163,9 @@ addPlayerButton.addEventListener('click', () => {
         startGameButton.disabled = false;
         updatePlayersListUI();
         updatePlayersDisplay();
-        playSuccessSound();
     } else if(players.includes(playerName)) {
-        playErrorSound();
         alert('Player name already exists!');
     } else {
-        playErrorSound();
         alert('Please enter a valid player name.');
     }
 });
@@ -220,7 +178,6 @@ clearPlayersButton.addEventListener('click', () => {
         setCookie('players', JSON.stringify(players), 7);
         updatePlayersDisplay();
         startGameButton.disabled = true;
-        playSuccessSound();
     }
 });
 
@@ -250,13 +207,11 @@ startGameButton.addEventListener('click', () => {
     rollButton.disabled = false;
     updatePlayersDisplay();
     highlightCurrentPlayer();
-    playSuccessSound();
 });
 
 // Guest Mode Event
 guestModeButton.addEventListener('click', () => {
     if(players.length >=10){
-        playErrorSound();
         alert('Maximum of 10 players reached!');
         return;
     }
@@ -268,7 +223,6 @@ guestModeButton.addEventListener('click', () => {
     rollButton.disabled = false;
     updatePlayersDisplay();
     highlightCurrentPlayer();
-    playSuccessSound();
 });
 
 /* ===========================
@@ -286,7 +240,6 @@ darkModeButton.addEventListener('click', () => {
         body.classList.remove('dark-mode');
         darkModeButton.textContent = '🌚 Dark Mode';
         eraseCookie('darkMode');
-        playSuccessSound();
     }
 });
 
@@ -297,13 +250,11 @@ confirmDarkMode.addEventListener('click', () => {
     darkModeButton.textContent = '🌞 Light Mode';
     setCookie('darkMode', 'enabled', 7);
     closeDarkModeModalFunc();
-    playSuccessSound();
 });
 
 // Cancel Dark Mode Activation
 cancelDarkMode.addEventListener('click', () => {
     closeDarkModeModalFunc();
-    playSuccessSound();
 });
 
 // Close Dark Mode Modal when clicking on <span> (x)
@@ -417,7 +368,7 @@ const darkModeCombinations = {
     '6-2': '😱 Share your biggest fear about the future.',
     '6-3': '🙈 Reveal a guilty pleasure you keep hidden.',
     '6-4': '😕 Talk about a time you sabotaged yourself.',
-    '6-5': '🖤 No escape—share your deepest, darkest secret.',
+    '6-5': '🃏 Joker Time! Make everyone laugh with your best joke.', // Updated to represent Joker
     '6-6': '💔 What’s a hard truth you’ve been avoiding?'
 };
 
@@ -444,6 +395,30 @@ function getFaceRotation(number) {
 }
 
 /* ===========================
+   Confetti Integration
+   =========================== */
+
+// 🎉 Function to Launch Confetti 🎉
+function launchConfetti() {
+    if(confettiInstance){
+        confettiInstance({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff4081', '#61dafb', '#ffffff']
+        });
+    }
+}
+
+// 🌗 Function to Initialize Confetti Canvas 🌗
+function initializeConfetti() {
+    confettiInstance = confetti.create(confettiCanvas, {
+        resize: true,
+        useWorker: true
+    });
+}
+
+/* ===========================
    Dice Rolling and Actions
    =========================== */
 
@@ -459,10 +434,9 @@ function rollDice() {
     isRolling = true;
     rollButton.disabled = true;
     message.textContent = '';
-    actionCard.style.display = 'none';
-    jokerCard.style.display = 'none';
-    overlay.style.display = 'none';
-    playRollSound();
+    actionCard.classList.remove('active');
+    jokerCard.classList.remove('active');
+    overlay.classList.remove('active');
 
     // 🕒 Get Rotation Duration from User or Default to 3 Seconds 🕒
     let rotationDuration = parseFloat(rotationTimeInput.value);
@@ -500,9 +474,16 @@ function rollDice() {
 
     // ⏳ After Animation Ends, Handle the Outcome ⏳
     setTimeout(() => {
+        // Show the rolled numbers on the dice
+        showDiceNumber(dice1, rolledNumber1);
+        showDiceNumber(dice2, rolledNumber2);
+
+        isRolling = false;
+        rollButton.disabled = false;
+
         const comboKey = `${rolledNumber1}-${rolledNumber2}`;
         const combinations = isDarkMode ? darkModeCombinations : lightModeCombinations;
-        const action = combinations[comboKey] || combinations[`${rolledNumber2}-${rolledNumber1}`];
+        let action = combinations[comboKey] || combinations[`${rolledNumber2}-${rolledNumber1}`];
 
         if (action) {
             if (comboKey === '6-5' || `${rolledNumber2}-${rolledNumber1}` === '6-5') {
@@ -515,9 +496,6 @@ function rollDice() {
             }
         }
 
-        isRolling = false;
-        rollButton.disabled = false;
-
         // Move to next player's turn
         currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
         highlightCurrentPlayer();
@@ -525,11 +503,28 @@ function rollDice() {
     }, rotationDuration * 1000); // Match the timeout with the rotation duration
 }
 
+// Function to show the rolled number on the dice
+function showDiceNumber(diceElement, number) {
+    // Clear existing active faces
+    const faces = diceElement.querySelectorAll('.face');
+    faces.forEach(face => {
+        face.classList.remove('active');
+    });
+
+    // Activate the corresponding face based on the rolled number
+    const activeFace = faces[number - 1]; // Faces are indexed from 0
+    activeFace.classList.add('active');
+}
+
+/* ===========================
+   Action and Joker Card Functions
+   =========================== */
+
 // 🎉 Function to Trigger Fun Actions with Card Flip Animation 🎉
 function triggerFunAction(action) {
     actionText.textContent = action;
-    actionCard.style.display = 'block';
-    overlay.style.display = 'block';
+    actionCard.classList.add('active');
+    overlay.classList.add('active');
     cardInner.classList.add('flip');
 
     // Automatically flip back after a short duration
@@ -541,64 +536,14 @@ function triggerFunAction(action) {
 // 🃏 Function to Trigger Joker Action Card 🎉
 function triggerJokerAction(action) {
     jokerActionText.textContent = action;
-    jokerCard.style.display = 'block';
-    overlay.style.display = 'block';
+    jokerCard.classList.add('active');
+    overlay.classList.add('active');
     jokerCardInner.classList.add('flip');
-    playJokerSound();
 
     // Automatically flip back after a short duration
     setTimeout(() => {
         closeJokerCardModal();
     }, 5000); // 5 seconds
-}
-
-/* ===========================
-   Dark Mode Warning Modal
-   =========================== */
-
-// Close Dark Mode Modal when clicking on <span> (x)
-closeDarkModeModal.addEventListener('click', () => {
-    closeDarkModeModalFunc();
-});
-
-// Confirm Dark Mode Activation
-confirmDarkMode.addEventListener('click', () => {
-    isDarkMode = true;
-    body.classList.add('dark-mode');
-    darkModeButton.textContent = '🌞 Light Mode';
-    setCookie('darkMode', 'enabled', 7);
-    closeDarkModeModalFunc();
-    playSuccessSound();
-});
-
-// Cancel Dark Mode Activation
-cancelDarkMode.addEventListener('click', () => {
-    closeDarkModeModalFunc();
-    playSuccessSound();
-});
-
-/* ===========================
-   Confetti Integration
-   =========================== */
-
-// 🎉 Function to Launch Confetti 🎉
-function launchConfetti() {
-    if(confettiInstance){
-        confettiInstance({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#ff4081', '#61dafb', '#ffffff']
-        });
-    }
-}
-
-// 🌗 Function to Initialize Confetti Canvas 🌗
-function initializeConfetti() {
-    confettiInstance = confetti.create(confettiCanvas, {
-        resize: true,
-        useWorker: true
-    });
 }
 
 /* ===========================
@@ -636,19 +581,3 @@ function highlightCurrentPlayer() {
         currentPlayerDiv.classList.add('current-player');
     }
 }
-
-/* ===========================
-   Add Players Button Event Listener
-   =========================== */
-
-// Add Players Button Event Listener
-addPlayersButton.addEventListener('click', () => {
-    openAddPlayersModal();
-});
-
-/* ===========================
-   Roll Button Event Listener
-   =========================== */
-
-// Add Event Listener for Roll Button
-rollButton.addEventListener('click', rollDice);
