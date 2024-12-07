@@ -362,7 +362,7 @@ const darkModeCombinations = {
     '5-2': '😣 Talk about a painful memory that still hurts.',
     '5-3': '🙊 Confess to something minorly illegal you’ve done.',
     '5-4': '💭 Reveal a secret desire you’ve never acted on.',
-    '5-5': '😞 Have you ever felt betrayed by someone close?',
+    '5-5': '🤯 Have you ever felt betrayed by someone close?',
     '5-6': '🤯 Discuss an internal conflict you’re facing.',
     '6-1': '🙏 Is there someone you owe an apology to?',
     '6-2': '😱 Share your biggest fear about the future.',
@@ -371,6 +371,71 @@ const darkModeCombinations = {
     '6-5': '🃏 Joker Time! Make everyone laugh with your best joke.', // Updated to represent Joker
     '6-6': '💔 What’s a hard truth you’ve been avoiding?'
 };
+
+const christmasCombinations = {
+    '1-1': '🎅 Sing a Christmas carol!',
+    '1-2': '🎄 Share your favorite Christmas memory!',
+    '1-3': '🎁 Describe the best gift you ever received!',
+    '1-4': '⛄ Make a snowman out of paper!',
+    '1-5': '🦌 Pretend to be a reindeer!',
+    '1-6': '🍪 Share your favorite Christmas cookie recipe!',
+    '2-1': '🎅 Dress up as Santa!',
+    '2-2': '🎄 Decorate a small tree!',
+    '2-3': '🎁 Wrap an imaginary gift!',
+    '2-4': '⛄ Sing "Frosty the Snowman"!',
+    '2-5': '🦌 Do a reindeer dance!',
+    '2-6': '🍪 Bake cookies (or pretend to)!',
+    '3-1': '🎅 Write a letter to Santa!',
+    '3-2': '🎄 Make a Christmas ornament!',
+    '3-3': '🎁 Exchange gifts with a friend!',
+    '3-4': '⛄ Build a snow fort (outside or inside)!',
+    '3-5': '🦌 Act out a scene from "Rudolph the Red-Nosed Reindeer"!',
+    '3-6': '🍪 Decorate Christmas cookies!',
+    '4-1': '🎅 Tell a Christmas joke!',
+    '4-2': '🎄 Read a Christmas story!',
+    '4-3': '🎁 Donate a toy to a child in need!',
+    '4-4': '⛄ Have a snowball fight (with paper snowballs)!',
+    '4-5': '🦌 Make reindeer antlers and a nose!',
+    '4-6': '🍪 Make gingerbread houses!',
+    '5-1': '🎅 Sing a Christmas duet!',
+    '5-2': '🎄 Watch a Christmas movie!',
+    '5-3': '🎁 Play a secret Santa game!',
+    '5-4': '⛄ Make a Christmas card!',
+    '5-5': '🦌 Go on a scavenger hunt for Christmas decorations!',
+    '5-6': '🍪 Host a cookie exchange!',
+    '6-1': '🎅 Volunteer at a local charity!',
+    '6-2': '🎄 Go ice skating!',
+    '6-3': '🎁 Make homemade gifts!',
+    '6-4': '⛄ Have a hot cocoa and Christmas movie night!',
+    '6-5': '🦌 Go caroling!',
+    '6-6': '🍪 Make a Christmas feast!'
+};
+
+let isChristmasMode = false;
+
+// Toggle Christmas Mode
+const christmasModeButton = document.getElementById('christmasModeButton');
+christmasModeButton.addEventListener('click', () => {
+    isChristmasMode = !isChristmasMode;
+    if (isChristmasMode) {
+        body.classList.add('christmas-mode');
+        christmasModeButton.textContent = '🎅 Normal Mode';
+    } else {
+        body.classList.remove('christmas-mode');
+        christmasModeButton.textContent = '🎄 Christmas Mode';
+    }
+});
+
+// Use the appropriate combinations based on the mode
+function getCurrentCombinations() {
+    if (isChristmasMode) {
+        return christmasCombinations;
+    } else if (isDarkMode) {
+        return darkModeCombinations;
+    } else {
+        return lightModeCombinations;
+    }
+}
 
 /* ===========================
    Utility Functions
@@ -424,14 +489,19 @@ function initializeConfetti() {
 
 // 🎬 Main Function to Handle Dice Rolling 🎬
 function rollDice() {
-    if (isRolling) return; // Stop if already rolling
+    console.log("Roll Dice button clicked");
 
-    // Check if there are no players and guest mode is not active
+    if (isRolling) {
+        console.log("Already rolling, returning");
+        return; // Stop if already rolling
+    }
+
     if (players.length === 0 && !guestMode) {
-        // Automatically add a guest player
+        console.log("No players found, adding Guest");
         players.push('Guest');
         guestMode = true;
         updatePlayersDisplay();
+        highlightCurrentPlayer();
     }
 
     isRolling = true;
@@ -441,41 +511,28 @@ function rollDice() {
     jokerCard.classList.remove('active');
     overlay.classList.remove('active');
 
-    // Get rotation duration from user or default to 3 seconds
     let rotationDuration = parseFloat(rotationTimeInput.value);
     if (isNaN(rotationDuration) || rotationDuration < 1) rotationDuration = 3;
 
-    // Update transition duration based on user input
     dice1.style.transition = `transform ${rotationDuration}s cubic-bezier(0.25, 1, 0.5, 1)`;
     dice2.style.transition = `transform ${rotationDuration}s cubic-bezier(0.25, 1, 0.5, 1)`;
 
-    // Roll two dice
     const rolledNumber1 = getRandomInt(1, 6);
     const rolledNumber2 = getRandomInt(1, 6);
+    console.log(`Rolled numbers: ${rolledNumber1}, ${rolledNumber2}`);
 
-    // Calculate random rotations for dice1
     const randomXRotations1 = getRandomInt(3, 6);
     const randomYRotations1 = getRandomInt(3, 6);
-
-    // Total degrees to rotate for dice1
     const totalX1 = (randomXRotations1 * 360) + getFaceRotation(rolledNumber1).x;
     const totalY1 = (randomYRotations1 * 360) + getFaceRotation(rolledNumber1).y;
-
-    // Apply rotation for dice1
     dice1.style.transform = `rotateX(${totalX1}deg) rotateY(${totalY1}deg)`;
 
-    // Calculate random rotations for dice2
     const randomXRotations2 = getRandomInt(3, 6);
     const randomYRotations2 = getRandomInt(3, 6);
-
-    // Total degrees to rotate for dice2
     const totalX2 = (randomXRotations2 * 360) + getFaceRotation(rolledNumber2).x;
     const totalY2 = (randomYRotations2 * 360) + getFaceRotation(rolledNumber2).y;
-
-    // Apply rotation for dice2
     dice2.style.transform = `rotateX(${totalX2}deg) rotateY(${totalY2}deg)`;
 
-    // After animation ends, handle the outcome
     setTimeout(() => {
         showDiceNumber(dice1, rolledNumber1);
         showDiceNumber(dice2, rolledNumber2);
@@ -484,7 +541,7 @@ function rollDice() {
         rollButton.disabled = false;
 
         const comboKey = `${rolledNumber1}-${rolledNumber2}`;
-        const combinations = isDarkMode ? darkModeCombinations : lightModeCombinations;
+        const combinations = getCurrentCombinations();
         let action = combinations[comboKey] || combinations[`${rolledNumber2}-${rolledNumber1}`];
 
         if (action) {

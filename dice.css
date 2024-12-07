@@ -23,6 +23,25 @@ body.dark-mode {
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
 }
 
+/* Christmas Mode */
+body.christmas-mode {
+    background: linear-gradient(135deg, #2e8b57, #3cb371); /* Festive green gradient */
+    background-size: cover;
+    color: #ffffff; /* Ensure text is readable */
+}
+
+body.christmas-mode .dice {
+    background-color: #ff0000; /* Christmas red */
+}
+
+body.christmas-mode .face {
+    border-color: #00ff00; /* Christmas green */
+}
+
+body.christmas-mode .dot {
+    background-color: #ff0000; /* Christmas red */
+}
+
 /* Header Styling */
 .header {
     position: fixed;
@@ -995,4 +1014,26 @@ body.dark-mode .players-display .player-name:hover {
 /* Overlay should be visible when a modal is active */
 .overlay.active {
     display: block;
+}
+
+body.christmas-mode .action-card,
+body.christmas-mode .joker-card {
+    background: linear-gradient(135deg, #ff7f50, #ff6347); /* Festive gradient */
+    border: 5px solid #00ff00; /* Christmas green border */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+}
+
+body.christmas-mode .card-front,
+body.christmas-mode .card-back {
+    background: #ffffff;
+    color: #ff0000; /* Christmas red text */
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+body.christmas-mode .card-back {
+    background: #ff6347; /* Festive red */
+    color: #ffffff;
 }
