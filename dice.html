@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Dice Game</title>
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="dice.css">
+    <!-- Link to Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to Animate.css for Enhanced Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+    <!-- Header with Dark Mode and Add Players Buttons -->
+    <header class="header">
+        <!-- Dark Mode Toggle Button -->
+        <button id="darkModeButton" class="header-button animate__animated">🌚 Dark Mode</button>
+        <!-- Add Players Button -->
+        <button id="addPlayersButton" class="header-button animate__animated">👥 Add Players</button>
+    </header>
+
+    <!-- Player Names Display -->
+    <div class="players-display" id="playersDisplay">
+        <!-- Player names will be dynamically added here -->
+    </div>
+
+    <!-- Dice Container -->
+    <div class="dice-container">
+        <!-- Dice Wrapper -->
+        <div class="dice-wrapper">
+            <!-- First Dice -->
+            <div id="dice1" class="dice">
+                <!-- Dice Faces -->
+                <div class="face front"><div class="dot"></div></div>
+                <div class="face back"><div class="dot"></div></div>
+                <div class="face right"><div class="dot"></div></div>
+                <div class="face left"><div class="dot"></div></div>
+                <div class="face top"><div class="dot"></div></div>
+                <div class="face bottom"><div class="dot"></div></div>
+            </div>
+
+            <!-- Second Dice -->
+            <div id="dice2" class="dice">
+                <!-- Dice Faces -->
+                <div class="face front"><div class="dot"></div></div>
+                <div class="face back"><div class="dot"></div></div>
+                <div class="face right"><div class="dot"></div></div>
+                <div class="face left"><div class="dot"></div></div>
+                <div class="face top"><div class="dot"></div></div>
+                <div class="face bottom"><div class="dot"></div></div>
+            </div>
+        </div>
+
+        <!-- Roll Button -->
+        <button id="rollButton" class="roll-button animate__animated" disabled>🎲 Roll Dice</button>
+
+        <!-- Rotation Duration Input -->
+        <div class="rotation-duration">
+            <label for="rotationTime">Rotation Time (sec):</label>
+            <input type="number" id="rotationTime" min="1" max="10" value="3">
+        </div>
+
+        <!-- Message Display -->
+        <div id="message" class="message"></div>
+
+        <!-- Fun Action Card Modal -->
+        <div id="actionCard" class="action-card animate__animated">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Curious?</h2>
+                    <p>Click to reveal your action!</p>
+                </div>
+                <div class="card-back">
+                    <h2>Action</h2>
+                    <p id="actionText">Your action goes here!</p>
+                    <button id="closeCard" class="close-button">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Joker Card Modal -->
+        <div id="jokerCard" class="joker-card animate__animated">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>🃏 Joker 🃏</h2>
+                    <p>Surprise Action!</p>
+                </div>
+                <div class="card-back">
+                    <h2>Special Action</h2>
+                    <p id="jokerActionText">Your special joker action goes here!</p>
+                    <button id="closeJokerCard" class="close-button">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spooky Dark Mode Warning Modal -->
+        <div id="darkModeModal" class="modal animate__animated">
+            <div class="modal-content spooky-modal">
+                <span class="close" id="closeDarkModeModal">&times;</span>
+                <h2>🔮 Dark Mode Activated 🔮</h2>
+                <p>You've entered the spooky side! Proceed with caution.</p>
+                <button id="confirmDarkMode" class="confirm-button">Confirm</button>
+                <button id="cancelDarkMode" class="cancel-button">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Overlay for Modals -->
+        <div id="overlay" class="overlay"></div>
+
+        <!-- Add Players Modal -->
+        <div id="addPlayersModal" class="modal animate__animated">
+            <div class="modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <h2>Add Players</h2>
+                <input type="text" id="playerNameInput" placeholder="Enter player name">
+                <button id="addPlayerButton">Add Player</button>
+                <button id="clearPlayersButton">Clear All Players</button>
+                <button id="guestModeButton">Guest Mode</button>
+                <div id="playersList" class="players-list">
+                    <!-- Player names will be listed here -->
+                </div>
+                <button id="startGameButton" class="start-game-button" disabled>Start Game</button>
+            </div>
+        </div>
+
+        <!-- Sound Effects -->
+        <audio id="rollSound" src="https://www.myinstants.com/media/sounds/dice-roll-sound-effect.mp3" preload="auto"></audio>
+        <audio id="successSound" src="https://www.myinstants.com/media/sounds/success-sound-effect.mp3" preload="auto"></audio>
+        <audio id="errorSound" src="https://www.myinstants.com/media/sounds/error-sound-effect.mp3" preload="auto"></audio>
+        <audio id="jokerSound" src="https://www.myinstants.com/media/sounds/joker-sound-effect.mp3" preload="auto"></audio>
+
+        <!-- Confetti Canvas -->
+        <canvas id="confettiCanvas"></canvas>
+    </div>
+
+    <!-- Link to External JavaScript -->
+    <!-- Load canvas-confetti before dice.js -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="dice.js"></script>
+</body>
+</html>

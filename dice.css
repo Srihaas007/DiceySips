@@ -1,0 +1,984 @@
+/* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1f4037, #99f2c8);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background 0.5s;
+    overflow-x: hidden;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
+
+/* Header Styling */
+.header {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1002;
+}
+
+/* Header Buttons (Dark Mode and Add Players) */
+.header-button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-button:hover {
+    background-color: #e6b800;
+    transform: translateY(-2px);
+}
+
+body.dark-mode .header-button {
+    background-color: #444444;
+    color: #ffffff;
+}
+
+body.dark-mode .header-button:hover {
+    background-color: #555555;
+}
+
+/* Players Display */
+.players-display {
+    display: flex;
+    gap: 15px;
+    margin: 100px 0 20px 0; /* Adjusted for fixed header */
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeInDown 1s ease forwards;
+}
+
+.player-name {
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    font-size: 18px;
+    color: #ffffff;
+    position: relative;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+body.dark-mode .player-name {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+}
+
+.current-player {
+    color: #ff4081;
+    text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081, 0 0 30px #ff4081;
+    animation: sparkle 1.5s infinite;
+    transform: scale(1.1);
+}
+
+/* Sparkle Animation */
+@keyframes sparkle {
+    0% {
+        text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081, 0 0 30px #ff4081;
+    }
+    50% {
+        text-shadow: 0 0 20px #ff4081, 0 0 30px #ff4081, 0 0 40px #ff4081;
+    }
+    100% {
+        text-shadow: 0 0 10px #ff4081, 0 0 20px #ff4081, 0 0 30px #ff4081;
+    }
+}
+
+/* Fade In Down Animation for Players Display */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dice Container */
+.dice-container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 80px 60px; /* Increased padding */
+    border-radius: 30px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(25px);
+    width: 100vw; /* Increased width */
+    max-width: 1600px; /* Increased max-width */
+    position: relative;
+    transition: background 0.5s;
+    margin-bottom: 40px;
+    animation: fadeInUp 1s ease forwards;
+}
+
+body.dark-mode .dice-container {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Fade In Up Animation for Dice Container */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dice Wrapper */
+.dice-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 50px; /* Increased gap */
+    margin-bottom: 30px;
+    perspective: 1200px; /* Enhanced for 3D effect */
+}
+
+/* Dice Styling */
+.dice {
+    width: 200px; /* Increased width */
+    height: 200px; /* Increased height */
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg) rotateY(0deg);
+    transition: transform 3s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    border-radius: 20px; /* More rounded */
+}
+
+.dice:hover {
+    transform: scale(1.1);
+}
+
+/* Dice Faces */
+.face {
+    position: absolute;
+    width: 200px; /* Increased width */
+    height: 200px; /* Increased height */
+    background-color: #ffffff;
+    border: 2px solid #61dafb;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+body.dark-mode .face {
+    background-color: #333333;
+    border-color: #ff4081;
+}
+
+/* Dots on the Dice */
+.dot {
+    width: 22px;
+    height: 22px;
+    background-color: #282c34;
+    border-radius: 50%;
+    margin: 6px;
+    transition: background-color 0.3s;
+}
+
+body.dark-mode .dot {
+    background-color: #ffffff;
+}
+
+/* Positioning Each Face of the Dice */
+.front  { transform: rotateY(0deg) translateZ(100px); }
+.back   { transform: rotateY(180deg) translateZ(100px); }
+.right  { transform: rotateY(90deg) translateZ(100px); }
+.left   { transform: rotateY(-90deg) translateZ(100px); }
+.top    { transform: rotateX(90deg) translateZ(100px); }
+.bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+/* Roll Button Styling */
+.roll-button {
+    padding: 20px 50px; /* Increased padding */
+    font-size: 28px; /* Increased font size */
+    cursor: pointer;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 25px; /* More rounded */
+    color: #282c34;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+    margin: 30px 10px;
+    animation: bounceIn 1s;
+}
+
+.roll-button:hover {
+    background-color: #21a1f1;
+    transform: translateY(-7px);
+    box-shadow: 0 18px 30px rgba(0,0,0,0.3);
+}
+
+.roll-button:active {
+    transform: translateY(0px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .roll-button {
+    background-color: #ff4081;
+    color: #ffffff;
+}
+
+body.dark-mode .roll-button:hover {
+    background-color: #e91e63;
+}
+
+/* Bounce In Animation for Roll Button */
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+    70% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Rotation Duration Input */
+.rotation-duration {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px; /* Increased gap */
+    animation: fadeIn 1.5s ease forwards;
+}
+
+.rotation-duration label {
+    font-size: 22px; /* Increased font size */
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .rotation-duration label {
+    color: #ffffff;
+}
+
+.rotation-duration input {
+    width: 90px; /* Increased width */
+    padding: 14px 24px; /* Increased padding */
+    font-size: 20px; /* Increased font size */
+    border: 2px solid #61dafb;
+    border-radius: 15px; /* More rounded */
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+body.dark-mode .rotation-duration input {
+    border-color: #ff4081;
+    background-color: #222;
+    color: #fff;
+}
+
+.rotation-duration input:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(97, 218, 251, 0.7);
+}
+
+body.dark-mode .rotation-duration input:focus {
+    box-shadow: 0 0 12px rgba(255, 64, 129, 0.7);
+}
+
+/* Message Display */
+.message {
+    margin-top: 20px;
+    font-size: 26px; /* Increased font size */
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    min-height: 60px; /* Increased height */
+    transition: color 0.3s;
+    animation: fadeIn 2s ease forwards;
+}
+
+body.dark-mode .message {
+    color: #ffffff;
+}
+
+/* Action Card Modal */
+.action-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 450px; /* Increased size */
+    height: 550px; /* Increased size */
+    transform: translate(-50%, -50%) rotateY(90deg);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    background: transparent;
+    z-index: 1001;
+    display: none;
+    animation: flipIn 0.6s forwards;
+}
+
+@keyframes flipIn {
+    from {
+        transform: translate(-50%, -50%) rotateY(90deg);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%) rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+.action-card .card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 2s; /* Increased transition time for smoother spin */
+}
+
+.action-card .card-front,
+.action-card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px; /* More rounded */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-card .card-front {
+    background: #ffffff;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.dark-mode .action-card .card-front {
+    background: #333333;
+}
+
+.action-card .card-back {
+    background: #ffffff;
+    transform: rotateY(180deg);
+    padding: 30px;
+    text-align: center;
+}
+
+body.dark-mode .action-card .card-back {
+    background: #444444;
+    color: #ffffff;
+}
+
+.action-card.flip .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Close Button on Action Card */
+.close-button {
+    padding: 15px 30px; /* Increased padding */
+    font-size: 20px; /* Increased font size */
+    cursor: pointer;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 15px;
+    color: #282c34;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 30px;
+}
+
+.close-button:hover {
+    background-color: #21a1f1;
+    transform: scale(1.05);
+}
+
+body.dark-mode .close-button {
+    background-color: #ff4081;
+    color: #ffffff;
+}
+
+body.dark-mode .close-button:hover {
+    background-color: #e91e63;
+}
+
+/* Joker Card Modal */
+.joker-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px; /* Increased size */
+    height: 600px; /* Increased size */
+    transform: translate(-50%, -50%) rotateY(90deg);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    background: transparent;
+    z-index: 1001;
+    display: none;
+    animation: flipIn 0.6s forwards;
+}
+
+.joker-card .card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 2s; /* Increased transition time for smoother spin */
+}
+
+.joker-card .card-front,
+.joker-card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px; /* More rounded */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.joker-card .card-front {
+    background: #ffffff;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.dark-mode .joker-card .card-front {
+    background: #333333;
+}
+
+.joker-card .card-back {
+    background: #ffffff;
+    transform: rotateY(180deg);
+    padding: 30px;
+    text-align: center;
+}
+
+body.dark-mode .joker-card .card-back {
+    background: #444444;
+    color: #ffffff;
+}
+
+.joker-card.flip .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Close Button on Joker Card */
+#closeJokerCard {
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #ff5722;
+    border: none;
+    border-radius: 15px;
+    color: #ffffff;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 30px;
+}
+
+#closeJokerCard:hover {
+    background-color: #e64a19;
+    transform: scale(1.05);
+}
+
+/* Dark Mode Warning Modal */
+.spooky-modal {
+    background-color: #2c2c2c;
+    color: #ff4081;
+    border: 2px solid #ff4081;
+    text-align: center;
+    animation: spookyBounce 1s infinite;
+}
+
+.spooky-modal h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.spooky-modal p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.confirm-button,
+.cancel-button {
+    padding: 15px 30px;
+    margin: 10px 15px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.confirm-button {
+    background-color: #ff4081;
+    color: #ffffff;
+}
+
+.confirm-button:hover {
+    background-color: #e91e63;
+    transform: scale(1.05);
+}
+
+.cancel-button {
+    background-color: #ffffff;
+    color: #ff4081;
+    border: 2px solid #ff4081;
+}
+
+.cancel-button:hover {
+    background-color: #ff4081;
+    color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* Spooky Bounce Animation for Modal */
+@keyframes spookyBounce {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-10px) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(10px) rotate(2deg);
+    }
+    75% {
+        transform: translateY(-5px) rotate(-1deg);
+    }
+}
+
+/* Overlay for Modals */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Add Players Modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1003;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 40px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 600px; /* Increased max-width */
+    border-radius: 25px;
+    position: relative;
+    animation: slideDown 0.5s ease-out;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+}
+
+/* Dark Mode for Modal */
+body.dark-mode .modal-content {
+    background-color: #333333;
+    color: #ffffff;
+    border: 2px solid #ff4081;
+}
+
+/* Close Button in Modal */
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+body.dark-mode .close {
+    color: #ffffff;
+}
+
+body.dark-mode .close:hover,
+body.dark-mode .close:focus {
+    color: #ff4081;
+}
+
+/* Modal Content */
+.modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    text-align: center;
+    animation: fadeIn 1s ease forwards;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 14px 24px; /* Increased padding */
+    margin: 15px 0 25px 0; /* Increased margins */
+    display: inline-block;
+    border: 2px solid #61dafb;
+    border-radius: 15px; /* More rounded */
+    box-sizing: border-box;
+    font-size: 20px; /* Increased font size */
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+body.dark-mode .modal-content input {
+    border-color: #ff4081;
+    background-color: #222;
+    color: #fff;
+}
+
+.modal-content input:focus {
+    outline: none;
+    box-shadow: 0 0 12px rgba(97, 218, 251, 0.7);
+}
+
+body.dark-mode .modal-content input:focus {
+    box-shadow: 0 0 12px rgba(255, 64, 129, 0.7);
+}
+
+.modal-content button {
+    padding: 15px 35px; /* Increased padding */
+    margin: 15px 10px;
+    font-size: 20px; /* Increased font size */
+    cursor: pointer;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 20px; /* More rounded */
+    color: #282c34;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.modal-content button:hover {
+    background-color: #21a1f1;
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+}
+
+.modal-content button:active {
+    transform: translateY(0px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .modal-content button {
+    background-color: #ff4081;
+    color: #ffffff;
+}
+
+body.dark-mode .modal-content button:hover {
+    background-color: #e91e63;
+}
+
+/* Start Game Button Styling */
+.start-game-button {
+    background-color: #4caf50;
+    color: white;
+    margin-top: 20px;
+    padding: 15px 35px; /* Increased padding */
+    font-size: 22px; /* Increased font size */
+    border-radius: 20px; /* More rounded */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.start-game-button:disabled {
+    background-color: #a5d6a7;
+    cursor: not-allowed;
+}
+
+.start-game-button:hover:not(:disabled) {
+    background-color: #388e3c;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Players List in Modal */
+.players-list {
+    max-height: 250px; /* Increased max-height */
+    overflow-y: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    animation: fadeIn 2s ease forwards;
+}
+
+.players-list .player {
+    padding: 18px; /* Increased padding */
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px; /* More rounded */
+    margin-bottom: 20px;
+    font-size: 20px; /* Increased font size */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.players-list .player:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+body.dark-mode .players-list .player {
+    background-color: rgba(255, 64, 129, 0.2);
+}
+
+body.dark-mode .players-list .player:hover {
+    background-color: rgba(255, 64, 129, 0.4);
+}
+
+/* Players Display Styling */
+.players-display .player-name {
+    padding: 15px 30px; /* Increased padding */
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    font-size: 20px; /* Increased font size */
+    color: #ffffff;
+    position: relative;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+body.dark-mode .players-display .player-name {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+}
+
+.players-display .player-name:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+body.dark-mode .players-display .player-name:hover {
+    background-color: rgba(255, 64, 129, 0.3);
+}
+
+/* Action Card Flip Animation */
+.card-inner.flip {
+    transform: rotateY(180deg);
+}
+
+/* Slide Down Animation for Modal */
+@keyframes slideDown {
+    from { top: -50px; opacity: 0; }
+    to { top: 0; opacity: 1; }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Confetti Canvas Styling */
+#confettiCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2000;
+}
+
+/* Responsive Design Enhancements */
+@media (max-width: 1600px) {
+    .dice-container {
+        width: 95vw;
+        max-width: 1400px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .dice-container {
+        width: 95vw;
+        max-width: 1400px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .dice {
+        width: 180px;
+        height: 180px;
+    }
+    .face {
+        width: 180px;
+        height: 180px;
+    }
+    .dot {
+        width: 18px;
+        height: 18px;
+    }
+    .roll-button {
+        padding: 18px 36px;
+        font-size: 24px;
+    }
+    .rotation-duration input {
+        width: 70px;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+    .rotation-duration label {
+        font-size: 18px;
+    }
+    .message {
+        font-size: 22px;
+    }
+    .action-card {
+        width: 420px;
+        height: 620px;
+    }
+    .joker-card {
+        width: 500px;
+        height: 600px;
+    }
+    .players-display .player-name {
+        font-size: 18px;
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 800px) {
+    .dice {
+        width: 160px;
+        height: 160px;
+    }
+    .face {
+        width: 160px;
+        height: 160px;
+    }
+    .dot {
+        width: 16px;
+        height: 16px;
+    }
+    .roll-button {
+        padding: 16px 32px;
+        font-size: 22px;
+    }
+    .rotation-duration input {
+        width: 60px;
+        padding: 8px 12px;
+        font-size: 16px;
+    }
+    .rotation-duration label {
+        font-size: 16px;
+    }
+    .message {
+        font-size: 20px;
+    }
+    .action-card {
+        width: 320px;
+        height: 480px;
+    }
+    .joker-card {
+        width: 420px;
+        height: 520px;
+    }
+    .players-display .player-name {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .dice-container {
+        padding: 60px 40px;
+    }
+    .dice {
+        width: 140px;
+        height: 140px;
+    }
+    .face {
+        width: 140px;
+        height: 140px;
+    }
+    .dot {
+        width: 14px;
+        height: 14px;
+    }
+    .roll-button {
+        padding: 14px 28px;
+        font-size: 20px;
+    }
+    .rotation-duration input {
+        width: 50px;
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    .rotation-duration label {
+        font-size: 12px;
+    }
+    .message {
+        font-size: 16px;
+    }
+    .action-card {
+        width: 280px;
+        height: 440px;
+    }
+    .joker-card {
+        width: 360px;
+        height: 480px;
+    }
+    .players-display .player-name {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+}
